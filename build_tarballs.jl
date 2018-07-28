@@ -14,7 +14,7 @@ sources = [
 
 script = """cd flint-$version
 """*raw"""
-./configure --prefix=$prefix --host=$target --enable-shared --disable-static --with-gmp=$prefix --with-mpfr=$prefix
+./configure --prefix=$prefix --enable-shared --disable-static --with-gmp=$prefix --with-mpfr=$prefix
 make -j
 make install
 """
