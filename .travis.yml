@@ -1,0 +1,33 @@
+language: julia
+os:
+- linux
+julia:
+- 0.6
+notifications:
+  email: false
+git:
+  depth: 99999999
+cache:
+  timeout: 1000
+  directories:
+  - downloads
+env:
+  global:
+  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+  - BINARYBUILDER_AUTOMATIC_APPLE=true
+sudo: required
+before_script:
+- julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryProvider.jl")'
+- julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryBuilder.jl"); Pkg.build()'
+script:
+- julia build_tarballs.jl
+deploy:
+  provider: releases
+  api_key:
+    secure: r9JXKl36nCs0+bSosHwC8pZfdmXPpwmSHza7Z/KrygaG5XXrkK6qvBpqrttGwueVTbUWk2yJ/Do9K9Mc7DgurK+93A8pACNkL9tF2LQxxLQuHuY9iRyqIwzPD3vGG3LFe56mTnkaa6GdtgQ9AJLs55mmE8kqs9RloDHQe/1xFhZd8BgOhumHmhlVQRKb6gbhkjqcoE3uxOgeJcP2/e/Ps58dU2qztWMGW043fpkZ1nEf9GXAng3/qM7cCZtIpuq/+NBeSjXN/+OgRHTa/vbbd8usSIJIeQZKv7QJ1bGwjukTigIyPhPQqrQViPCLRnirvEkHBtnHXl8yBV2xZexZ5jt9a0x3hPoc7uXJiBXeA6eBmcdvno8+XhrejzkbMUz3MJH3SPU71rdZSNyP62syc+pr0+qCYe4JIoX5cGo7v2HzRJirkuEWtTfCwbMbaElGmmQogc+vfepREKbGwaADc+8U/dcwYLlapKUgu5Oa7s5agynui7ISCX9hMn8yz58MFGrZ5byaxB+YNasKmLz4bchQbx9OeKBuW0oiEApqFMiVIBXQ8NXJ5MNKCnrRmhCIrfZz0EE6YavtconrrNTuj3hgz1RIrkzjbPSgQVl6vVgiw2VKYPrrrbLKeX5NrtGY7/iKf5k6fyKGi+iFY6QLvnWEQnTsc3m+yNGl8EB80Sw=
+  file_glob: true
+  file: products/*
+  skip_cleanup: true
+  on:
+    repo: isuruf/FLINTBuilder
+    tags: true
