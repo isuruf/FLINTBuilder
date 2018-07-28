@@ -15,7 +15,7 @@ sources = [
 script = """cd flint-$version
 """*raw"""
 ./configure --prefix=$prefix --host=$target --enable-shared --disable-static --with-gmp=$prefix --with-mpfr=$prefix
-make
+make -j
 make install
 """
 # These are the platforms we will build for by default, unless further
