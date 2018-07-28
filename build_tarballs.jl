@@ -4,15 +4,16 @@ using BinaryBuilder
 
 # Collection of sources required to build MPCBuilder
 name = "FLINT"
-version = v"2.5.2"
+hash = "ea9f102a0bb8ab5fd50258aa177c345593ab11df"
+version = VersionNumber("2.5.3+dev0.$(hash[1:10])")
 sources = [
-    "http://www.flintlib.org/flint-$version.tar.gz" =>
-    "cbf1fe0034533c53c5c41761017065f85207a1b770483e98b2392315f6575e87",
+    "https://github.com/wbhart/flint2/archive/$hash.tar.gz" =>
+    "3719310c21ebb2c6c6144f571026e4e1558847eaba7464c707484a4c33ca7356",
 ]
 
 # Bash recipe for building across all platforms
 
-script = """cd flint-$version
+script = """cd flint2-$hash
 """*raw"""
 ./configure --prefix=$prefix --enable-shared --disable-static --with-gmp=$prefix --with-mpfr=$prefix
 make -j
